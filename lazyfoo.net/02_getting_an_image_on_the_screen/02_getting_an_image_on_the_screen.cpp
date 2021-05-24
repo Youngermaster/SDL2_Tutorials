@@ -44,7 +44,7 @@ bool loadMedia() {
     //Loading success flag
     bool success = true;
 
-    //Load splash image
+    //Load splash image bitmap
     gHelloWorld = SDL_LoadBMP("hello_world.bmp");
     if (gHelloWorld == NULL) {
         printf("Unable to load image %s! SDL Error: %s\n", "hello_world.bmp", SDL_GetError());
