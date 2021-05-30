@@ -1,7 +1,9 @@
 //Using SDL, SDL_image, standard IO, and strings
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <emscripten.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <string>
 
@@ -110,38 +112,42 @@ SDL_Surface* loadSurface(std::string path) {
     return optimizedSurface;
 }
 
+void mainLoop() {
+    //Load media
+    if (!loadMedia()) {
+        printf("Failed to load media!\n");
+    } else {
+        //Main loop flag
+        bool quit = false;
+
+        //Event handler
+        SDL_Event e;
+
+        //While application is running
+        while (!quit) {
+            //Handle events on queue
+            while (SDL_PollEvent(&e) != 0) {
+                //User requests quit
+                if (e.type == SDL_QUIT) {
+                    quit = true;
+                }
+            }
+
+            //Apply the PNG image
+            SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, NULL);
+
+            //Update the surface
+            SDL_UpdateWindowSurface(gWindow);
+        }
+    }
+}
+
 int main(int argc, char* args[]) {
     //Start up SDL and create window
     if (!init()) {
         printf("Failed to initialize!\n");
     } else {
-        //Load media
-        if (!loadMedia()) {
-            printf("Failed to load media!\n");
-        } else {
-            //Main loop flag
-            bool quit = false;
-
-            //Event handler
-            SDL_Event e;
-
-            //While application is running
-            while (!quit) {
-                //Handle events on queue
-                while (SDL_PollEvent(&e) != 0) {
-                    //User requests quit
-                    if (e.type == SDL_QUIT) {
-                        quit = true;
-                    }
-                }
-
-                //Apply the PNG image
-                SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, NULL);
-
-                //Update the surface
-                SDL_UpdateWindowSurface(gWindow);
-            }
-        }
+        emscripten_set_main_loop(mainLoop, 0, 1);
     }
 
     //Free resources and close SDL
