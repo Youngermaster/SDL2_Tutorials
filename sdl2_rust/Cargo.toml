@@ -8,3 +8,6 @@ edition = "2018"
 
 [dependencies]
 sdl2 = "0.34"
+
+[target.arm-unknown-linux-musleabi]
+image = "my/image:tag"
