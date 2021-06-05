@@ -8,6 +8,3 @@ edition = "2018"
 
 [dependencies]
 sdl2 = "0.34"
-
-[target.arm-unknown-linux-musleabi]
-image = "youngermaster/rustsdl2:rpizerow"

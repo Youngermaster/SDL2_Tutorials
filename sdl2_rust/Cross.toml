@@ -1,0 +1,2 @@
+[target.arm-unknown-linux-musleabi]
+image = "youngermaster/rustsdl2:rpizerow"
