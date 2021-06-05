@@ -10,4 +10,4 @@ edition = "2018"
 sdl2 = "0.34"
 
 [target.arm-unknown-linux-musleabi]
-image = "my/image:tag"
+image = "youngermaster/rustsdl2:rpizerow"
